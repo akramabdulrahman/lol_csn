@@ -12,9 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/blog');
 });
-
+Route::get('blog','BlogController@index');
+Route::get('blog/{slug}','BlogController@showPost');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -28,4 +29,10 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['web']], function () {
     //
+});
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+
+    Route::get('/home', 'HomeController@index');
 });
